@@ -1,0 +1,9 @@
+Package: customtwitchtranscodeclient
+Version: 0.9.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Essential: no
+Installed-Size: 1700
+Maintainer: Aslan2142
+Description: Downloads transcoded twitch stream data from custom transcode server and plays it
