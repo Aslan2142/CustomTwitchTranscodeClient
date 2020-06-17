@@ -3,7 +3,7 @@
 # Compile
 mkdir build
 cd build
-qmake ..
+cmake ..
 make
 cd ..
 
