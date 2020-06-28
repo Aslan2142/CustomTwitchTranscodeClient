@@ -1,5 +1,5 @@
 pkgname=customtwitchtranscodeclient
-pkgver=0.9.0
+pkgver=0.9.1
 pkgrel=1
 pkgdesc="Downloads transcoded twitch stream data from custom transcode server and plays it"
 arch=('x86_64')
@@ -13,7 +13,6 @@ build() {
 package() {
 	mkdir -p $pkgdir/usr/bin
 	mkdir -p $pkgdir/usr/share/applications
-	mkdir -p $pkgdir/opt/aslan/icons
 	cp CustomTwitchTranscodeClient $pkgdir/usr/bin/customtwitchtranscodeclient
 	cp ../customtwitchtranscodeclient.desktop $pkgdir/usr/share/applications/customtwitchtranscodeclient.desktop
 }

@@ -33,7 +33,6 @@ private:
     char playing_buffer = 'B';
     bool playing = false;
     bool muted = false;
-    int minimum_required_bytes = 500000;
 
     void set_up_videoplayer();
 

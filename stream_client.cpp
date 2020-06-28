@@ -65,15 +65,18 @@ void StreamClient::on_data_read()
 
     if (chunk_buffer == nullptr) chunk_buffer = new QByteArray();
 
-    if (data.length() > 1 && data[0] == "start_of_chunk")
+    if (data.length() > 1 && data_all.startsWith("start_of_chunk-"))
     {
         *chunk_buffer = "";
     }
 
     chunk_buffer->append(data_all);
 
-    if (data_all.endsWith("end_of_chunk"))
+    if (data_all.endsWith("-end_of_chunk"))
     {
+        chunk_buffer->remove(0, 15);
+        chunk_buffer->remove(chunk_buffer->length() - 13, 13);
+
         emit chunk_downloaded(chunk_buffer);
         chunk_buffer = nullptr;
     }

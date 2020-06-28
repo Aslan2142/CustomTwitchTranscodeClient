@@ -116,13 +116,26 @@ void MainWindow::set_up_videoplayer()
 
 void MainWindow::chunk_downloaded(QByteArray *chunk)
 {
+    ui->controlButton->setEnabled(true);
+
     if (playing_buffer == 'A')
     {
-        bufferB->buffer().append(*chunk);
-        if (bufferB->buffer().size() >= minimum_required_bytes) ui->controlButton->setEnabled(true);
+        delete bufferB;
+        bufferB = new QBuffer();
+        bufferB->setData(*chunk);
+        bufferB->open(QIODevice::ReadWrite);
     } else {
-        bufferA->buffer().append(*chunk);
-        if (bufferA->buffer().size() >= minimum_required_bytes) ui->controlButton->setEnabled(true);
+        delete bufferA;
+        bufferA = new QBuffer();
+        bufferA->setData(*chunk);
+        bufferA->open(QIODevice::ReadWrite);
+    }
+
+    if (playerA->state() == QMediaPlayer::StoppedState && playerB->state() == QMediaPlayer::StoppedState)
+    {
+        playing = true;
+        ui->controlButton->setText("Pause");
+        player_state_changed(QMediaPlayer::StoppedState);
     }
 
     qDebug() << "chunk size: " << chunk->size();
@@ -143,16 +156,14 @@ void MainWindow::player_state_changed(QMediaPlayer::State state)
         if (playing_buffer == 'A')
         {
             playing_buffer = 'B';
+            playerB->setMedia(QMediaContent(), bufferB);
             playerB->setVideoOutput(video);
             playerB->play();
-            bufferA->buffer().clear();
-            playerA->setMedia(QMediaContent(), bufferA);
         } else {
             playing_buffer = 'A';
+            playerA->setMedia(QMediaContent(), bufferA);
             playerA->setVideoOutput(video);
             playerA->play();
-            bufferB->buffer().clear();
-            playerB->setMedia(QMediaContent(), bufferB);
         }
     }
 }

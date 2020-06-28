@@ -1,7 +1,7 @@
 # CustomTwitchTranscodeClient
 Downloads transcoded twitch stream data from custom transcode server and plays it<br />
 
-Version 0.9 Alpha<br />
+Version 0.9.1 Alpha<br />
 
 
 ## Installation
